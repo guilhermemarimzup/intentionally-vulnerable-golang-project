@@ -25,7 +25,7 @@ jobs:
     - name: Nancy
       uses: sonatype-nexus-community/nancy-github-action@main
       with:
-        run: sleuth --loud
+        nancyCommand: sleuth --loud
       
 #    - name: Backup HTML Report
 #      if: "${{ always() }}"
