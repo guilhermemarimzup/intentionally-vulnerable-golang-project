@@ -1,0 +1,36 @@
+name: Dependency Check
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+
+  dependency-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.15
+
+    - name: WriteGoList
+      run: |
+        go list -json ./... > go.list
+
+    - name: Nancy
+      uses: sonatype-nexus-community/nancy-github-action@main
+      with:
+        run: sleuth --loud
+      
+#    - name: Backup HTML Report
+#      if: "${{ always() }}"
+#      uses: actions/upload-artifact@v2
+#      with:
+#        name: dependency-check-report
+#        path: ./target/dependency-check-report.html
+
